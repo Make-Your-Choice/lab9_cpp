@@ -6,7 +6,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <malloc.h>
-#include <string.h>>
+#include <string.h>
+
+using namespace std;
 
 #define nmax 100
 
@@ -14,9 +16,17 @@ class special //бонусы
 {
     int bonus_num; //число бонусов
 public:
-    special() //конструктор
+    special() //конструктор без параметров
     {
         this->bonus_num = 5;
+    }
+    special(int a) //конструктор с параметром
+    {
+        this->bonus_num = a;
+    }
+    special(special& spec_offer) //конструктор копирования
+    {
+        this->bonus_num = spec_offer.bonus_num + 5;
     }
     void reduce_bonus() //сокращение числа бонусов
     {
@@ -64,8 +74,9 @@ class book_store //основной класс
     int popularity; //популярность в условных единицах
 public:
     int num_stock; //количество в магазине
-    book_store(special spec_offer[nmax]);
-    book_store(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d, special spec_offer[nmax]);
+    book_store(special spec_offer[nmax]); //конструктор с одним параметром
+    book_store(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d, special spec_offer[nmax]); //конструктор с параметрами
+    book_store(string str1); //конструктор с одним параметром
     //~book_store();
     void get();
     void input(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d);
@@ -101,6 +112,23 @@ book_store::book_store(special spec_offer[nmax]) //конструктор с п�
     }
     printf("Empty book created\n");
 };
+
+book_store::book_store(string str)
+{
+    this->title = str;
+    this->author = "unknown";
+    this->genre = "unknown";
+    this->price = 100;
+    this->num_stock = 10;
+    this->popularity = 15;
+    this->n = 1;
+    this->spec_offer[1].set_default();
+    /*for (int i = 0; i < n; i++)
+    {
+        this->spec_offer[i] = spec_offer[i];
+    }*/
+
+}
 
 book_store::book_store(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d, special spec_offer[nmax]) //конструктор с параметрами
 {
@@ -244,9 +272,9 @@ int main()
 
     //статическая переменная
 
-    puts("\nWorking with a single static variable\n");
-    special spec_offer1[1];
-    book_store book1(spec_offer1);
+    /*puts("\nWorking with a single static variable\n");
+    special spec_offer1[1]; //вызов конструктора по умолчанию (без параметров) статический
+    book_store book1(spec_offer1); //вызов конструктора с одним параметром статический
     puts("Input information about the 1 book\n");
     printf("Input title: ");
     rewind(stdin);
@@ -292,13 +320,13 @@ int main()
     printf("\nPredictable profit for the first book (using *): %d\n", k);
     p = predictable_popularity(book1);
     printf("\nPredictable popularity for the first book (friend fuction): %d\n", p);
-    printf("\nSpace left in the store: %d\n", book1.space_left);
+    printf("\nSpace left in the store: %d\n", book1.space_left);*/
 
     //динамическая переменная
 
-    puts("\nWorking with a single dynamic variable");
-    special* spec_offer2 = new special;
-    book_store* book2 = new book_store(spec_offer2);
+    /*puts("\nWorking with a single dynamic variable");
+    special* spec_offer2 = new special(); //вызов конструктора по умолчанию (без параметров) динамический
+    book_store* book2 = new book_store(spec_offer2); //вызов конструктора с одним параметром динамический
     puts("\nInput information about the 2 book\n");
     printf("Input title: ");
     rewind(stdin);
@@ -351,12 +379,12 @@ int main()
     printf("\nSpace left in the store (using 1 book): %d\n", book1.space_left);
     printf("\nSpace left in the store (using 2 book): %d\n", book2->space_left);
     delete book2;
-    book2 = NULL;
+    book2 = NULL;*/
 
     //статический массив
 
-    puts("\nWorking with a static massive\n");
-    special spec_offer3[nmax / 10];
+    /*puts("\nWorking with a static massive\n");
+    special spec_offer3[nmax / 10]; //вызов конструктора по умолчанию (без параметров) статический
     puts("Input number of specials\n");
     scanf_s("%d", &n);
     for (int i = 0; i < n; i++)
@@ -379,7 +407,7 @@ int main()
     scanf_s("%d", &y);
     printf("Input popularity: ");
     scanf_s("%d", &z);
-    book_store* book3 = new book_store(s1, s2, s3, x, y, z, n, spec_offer3);
+    book_store* book3 = new book_store(s1, s2, s3, x, y, z, n, spec_offer3); //вызов конструктора со всеми параметрами динамический
     printf("\nYour book\n");
     book3->get();
     book3->output();
@@ -408,12 +436,22 @@ int main()
     book3->predictable_profit(&k);
     printf("\nPredictable profit for the third book (using *): %d\n", k);
     p = predictable_popularity(*book3);
-    printf("\nPredictable popularity for the first book (friend fuction): %d\n", p);
+    printf("\nPredictable popularity for the first book (friend fuction): %d\n", p);*/
+
+    special spec_offer5[1];
+    string title1 = "rrrr";
+    string title2 = "ffff";
+    book_store book5[2] = {title1,title2};
+    for (int i = 0; i < 2; i++)
+    {
+        book5[i].output();
+    }
 
     //перегрузки в классе special
 
     puts("\nWorking with a single variable of the special class (overloads)\n");
-    special spec_offer0, spec_offer4;
+    special spec_offer0; //вызов конструктора по умолчанию (без параметров) статический
+    special spec_offer4(5); //вызов конструктора с параметром
     spec_offer0.set_default();
     printf("Number of bonuses: %d\n", spec_offer0);
     spec_offer0 = spec_offer0 + 5;
@@ -429,6 +467,13 @@ int main()
     spec_offer4.set_default();
     spec_offer4 = spec_offer0++;
     printf("Number of bonuses (spec_offer0 ++): %d\n", spec_offer4);
+
+    //перегрузки конструкторов в классе special
+    special spec_offer6(7); //вызов конструктора с параметром
+    special spec_offer7 = spec_offer6; //вызов конструктора копирования
+    special spec_offer8;
+    special spec_offer9(spec_offer8);
+    printf("\nNumber of bonuses (constructor overloads)\n\nspec_offer6: %d\nspec_offer7: %d\nspec_offer8: %d\nspec_offer9: %d\n", spec_offer6,spec_offer7, spec_offer8, spec_offer9);
     return 0;
 }
 
