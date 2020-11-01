@@ -1,22 +1,7 @@
 ﻿  PLab9.cpp
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(186,16): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(456,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(458,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(461,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(465,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(469,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(476,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(476,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(476,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 3 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(476,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 4 has type 'special'
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(270,21): warning C4101: 'm': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(270,15): warning C4101: 'z': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(271,20): warning C4101: 's2': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(271,10): warning C4101: 's1': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(270,31): warning C4101: 'p': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(270,12): warning C4101: 'y': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(271,30): warning C4101: 's3': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(270,9): warning C4101: 'x': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(270,18): warning C4101: 'n': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(271,40): warning C4101: 's4': unreferenced local variable
+C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(271,16): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'special'
+C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(282,16): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'special'
+C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(366,21): warning C4101: 'm': unreferenced local variable
+C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(366,18): warning C4101: 'n': unreferenced local variable
+C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(367,40): warning C4101: 's4': unreferenced local variable
   PLab9.vcxproj -> C:\Users\Ангелина\source\repos\IIISemester\PLab9\Debug\PLab9.exe

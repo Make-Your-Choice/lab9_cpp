@@ -1,12 +1,14 @@
 ﻿// PLab9.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //Статические поля и методы
 
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <conio.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
+#include <cstdlib>
 
 using namespace std;
 
@@ -15,6 +17,7 @@ using namespace std;
 class special //бонусы
 {
     int bonus_num; //число бонусов
+    char* definition; //определение бонусов
 public:
     special() //конструктор без параметров
     {
@@ -24,9 +27,46 @@ public:
     {
         this->bonus_num = a;
     }
-    special(special& spec_offer) //конструктор копирования
+    special(char* b, int c)
     {
-        this->bonus_num = spec_offer.bonus_num + 5;
+        definition = new char[10];
+        strcpy(this->definition, b);
+        this->bonus_num = c;
+    }
+    special(const special& spec_offer) //конструктор копирования
+    {
+        this->definition = spec_offer.definition;
+        //strcpy_s(this->definition, 10, spec_offer.definition);
+        this->bonus_num = spec_offer.bonus_num;
+    }
+    special& operator = (special& spec_offer)
+    {
+        int k;
+        if (definition)
+        {
+            delete definition;    // очистка памяти
+        }
+        definition = NULL;
+        this->bonus_num = spec_offer.bonus_num; // копирование обычного поля
+        k = strlen(spec_offer.definition) + 1;
+        definition = new char[k];  // выделение памяти для новой копии памяти для определения
+        strcpy(this->definition, spec_offer.definition);  // копирование в новую выделенную область
+        return *this;
+    }
+    /*special(const special& spec_offer) //конструктор копирования
+    {
+        definition = new char(strlen(spec_offer.definition) + 1);
+        //this->definition = spec_offer.definition;
+        strcpy(this->definition, spec_offer.definition);
+        this->bonus_num = spec_offer.bonus_num;
+    }*/
+    void output()
+    {
+        printf("\nNumber of bonuses: %d\nDefinition: %s\n", bonus_num, definition);
+    }
+    void change_def(char* a)
+    {
+        strcpy_s(this->definition, 10, a);
     }
     void reduce_bonus() //сокращение числа бонусов
     {
@@ -38,7 +78,7 @@ public:
     {
         this->bonus_num = 5;
     }
-    special operator + (int a) //перегрузка + постфиксная
+    /*special operator + (int a) //перегрузка + постфиксная
     {
         special spec_offer;
         spec_offer.bonus_num = this->bonus_num + a;
@@ -60,13 +100,14 @@ public:
     {
         this->bonus_num++;
         return *this;
-    }
+    }*/
 };
 
 class book_store //основной класс
 {
     special spec_offer[nmax]; //ассоциативный класс
     int n;
+    char* sub_genre;
     std::string title = ""; //название
     std::string author = ""; //автор
     std::string genre = ""; //жанр
@@ -77,10 +118,14 @@ public:
     book_store(special spec_offer[nmax]); //конструктор с одним параметром
     book_store(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d, special spec_offer[nmax]); //конструктор с параметрами
     book_store(string str1); //конструктор с одним параметром
+    //book_store(const book_store& book);
+    //book_store(char* sub_gen, char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d, special spec_offer[nmax]);
     //~book_store();
+    void change_sub_genre(char* a);
     void get();
     void input(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d);
     void output();
+    void output1();
     void sell();
     void price_rise();
     void rearrange();
@@ -146,10 +191,50 @@ book_store::book_store(char str1[nmax], char str2[nmax], char str3[nmax], int a,
     printf("New book initialized (with parameters)\n");
 };
 
+/*book_store::book_store(const book_store& book)
+{
+    sub_genre = new char(strlen(book.sub_genre) + 1);
+    strcpy_s(this->sub_genre, strlen(book.sub_genre) + 1, book.sub_genre);
+    this->title = book.title;
+    this->author = book.author;
+    this->genre = book.genre;
+    this->price = book.price;
+    this->num_stock = book.num_stock;
+    this->popularity = book.popularity;
+    this->n = book.n;
+    for (int i = 0; i < n; i++)
+    {
+        this->spec_offer[i] = book.spec_offer[i];
+    }
+}*/
+
+/*book_store::book_store(char* sub_gen, char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d, special spec_offer[nmax])
+{
+    sub_genre = new char[10];
+    strcpy(sub_genre, sub_gen);
+    this->title = str1;
+    this->author = str2;
+    this->genre = str3;
+    this->price = a;
+    this->num_stock = b;
+    this->popularity = c;
+    this->n = d;
+    for (int i = 0; i < n; i++)
+    {
+        this->spec_offer[i] = spec_offer[i];
+    }
+}*/
+
+
 /*book_store::~book_store() //деструктор
 {
     printf("Book deleted\n");
 }*/
+
+void book_store::change_sub_genre(char* ptr)
+{
+    strcpy_s(sub_genre, 10, ptr);
+}
 
 void book_store::input(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d) //ввод
 {
@@ -180,6 +265,17 @@ void book_store::get() //установка значений
 void book_store::output() //вывод
 {
     std::cout << "\nTitle: " << title << "\nAuthor: " << author << "\nGenre: " << genre << "\nPrice: " << price << "\nNumber in stock: " << num_stock << "\nPopularity: " << popularity << '\n';
+    printf("Number of bonuses: ");
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", spec_offer[i]);
+    }
+    printf("\n");
+}
+
+void book_store::output1() //вывод
+{
+    std::cout << "\nTitle: " << title << "\nAuthor: " << author << "\nGenre: " << genre << "\nSub genre: " << sub_genre << "\nPrice: " << price << "\nNumber in stock: " << num_stock << "\nPopularity: " << popularity << '\n';
     printf("Number of bonuses: ");
     for (int i = 0; i < n; i++)
     {
@@ -272,7 +368,7 @@ int main()
 
     //статическая переменная
 
-    /*puts("\nWorking with a single static variable\n");
+    puts("\nWorking with a single static variable\n");
     special spec_offer1[1]; //вызов конструктора по умолчанию (без параметров) статический
     book_store book1(spec_offer1); //вызов конструктора с одним параметром статический
     puts("Input information about the 1 book\n");
@@ -320,11 +416,11 @@ int main()
     printf("\nPredictable profit for the first book (using *): %d\n", k);
     p = predictable_popularity(book1);
     printf("\nPredictable popularity for the first book (friend fuction): %d\n", p);
-    printf("\nSpace left in the store: %d\n", book1.space_left);*/
+    printf("\nSpace left in the store: %d\n", book1.space_left);
 
     //динамическая переменная
 
-    /*puts("\nWorking with a single dynamic variable");
+    puts("\nWorking with a single dynamic variable");
     special* spec_offer2 = new special(); //вызов конструктора по умолчанию (без параметров) динамический
     book_store* book2 = new book_store(spec_offer2); //вызов конструктора с одним параметром динамический
     puts("\nInput information about the 2 book\n");
@@ -379,7 +475,7 @@ int main()
     printf("\nSpace left in the store (using 1 book): %d\n", book1.space_left);
     printf("\nSpace left in the store (using 2 book): %d\n", book2->space_left);
     delete book2;
-    book2 = NULL;*/
+    book2 = NULL;
 
     //статический массив
 
@@ -437,7 +533,8 @@ int main()
     printf("\nPredictable profit for the third book (using *): %d\n", k);
     p = predictable_popularity(*book3);
     printf("\nPredictable popularity for the first book (friend fuction): %d\n", p);*/
-
+    
+    printf("\nMassive using constructor with a single parameter\n");
     special spec_offer5[1];
     string title1 = "rrrr";
     string title2 = "ffff";
@@ -449,7 +546,7 @@ int main()
 
     //перегрузки в классе special
 
-    puts("\nWorking with a single variable of the special class (overloads)\n");
+    /*puts("\nWorking with a single variable of the special class (overloads)\n");
     special spec_offer0; //вызов конструктора по умолчанию (без параметров) статический
     special spec_offer4(5); //вызов конструктора с параметром
     spec_offer0.set_default();
@@ -466,14 +563,57 @@ int main()
     spec_offer0.set_default();
     spec_offer4.set_default();
     spec_offer4 = spec_offer0++;
-    printf("Number of bonuses (spec_offer0 ++): %d\n", spec_offer4);
+    printf("Number of bonuses (spec_offer0 ++): %d\n", spec_offer4);*/
 
-    //перегрузки конструкторов в классе special
-    special spec_offer6(7); //вызов конструктора с параметром
-    special spec_offer7 = spec_offer6; //вызов конструктора копирования
-    special spec_offer8;
-    special spec_offer9(spec_offer8);
-    printf("\nNumber of bonuses (constructor overloads)\n\nspec_offer6: %d\nspec_offer7: %d\nspec_offer8: %d\nspec_offer9: %d\n", spec_offer6,spec_offer7, spec_offer8, spec_offer9);
+    //мелкое и глубокое копирование
+    printf("\nShallow copying\n");
+    char* ptr1;
+    ptr1 = new char[10];
+    strcpy(ptr1, "iii");
+    special spec_offer6(ptr1, 10);
+    special spec_offer7 = spec_offer6;
+    printf("\nspec_offer6\n");
+    spec_offer6.output();
+    printf("\nspec_offer7\n");
+    spec_offer7.output();
+    spec_offer6.set_default();
+    strcpy(ptr1, "jjj");
+    spec_offer6.change_def(ptr1);
+    printf("\nspec_offer6\n");
+    spec_offer6.output();
+    printf("\nspec_offer7\n");
+    spec_offer7.output();
+    printf("\nDeep copying and overload\n");
+    special* spec_offer_1;
+    char* ptr;
+    ptr = new char[10];
+    strcpy(ptr, "ppp");
+    spec_offer_1 = new special(ptr, 10);
+    special* spec_offer_2;
+    strcpy(ptr, "kkk");
+    spec_offer_2 = new special(ptr, 15);
+    printf("\nspec_offer_1\n");
+    spec_offer_1->output();
+    printf("\nspec_offer_2\n");
+    spec_offer_2->output();
+    *spec_offer_2 = *spec_offer_1;
+    printf("\nspec_offer_1\n");
+    spec_offer_1->output();
+    printf("\nspec_offer_2\n");
+    spec_offer_2->output();
+    spec_offer_1->set_default();
+    strcpy(ptr, "jjj");
+    spec_offer_1->change_def(ptr);
+    printf("\nspec_offer_1:\n");
+    spec_offer_1->output();
+    printf("\nspec_offer_2:\n");
+    spec_offer_2->output();
+    /*book_store book6 = book1;
+    book1.change_sub_genre(ptr);
+    book1.output1();
+    book6.output1();*/
+
+    //printf("\nNumber of bonuses (constructor overloads)\n\nspec_offer6: %d\nspec_offer7: %d\n", spec_offer6, spec_offer7);
     return 0;
 }
 
