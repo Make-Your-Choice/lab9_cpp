@@ -23,6 +23,8 @@ public:
     special() //конструктор без параметров
     {
         this->bonus_num = 5;
+        definition = new char[10];
+        strcpy(this->definition, "");
     }
     special(int a) //конструктор с параметром
     {
@@ -95,10 +97,9 @@ class book_store //основной класс
 public:
     int num_stock; //количество в магазине
     book_store(special spec_offer[nmax]); //конструктор параметром
-    book_store(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d, special spec_offer[nmax]); //конструктор с параметрами
+    book_store(string str1, string str2, string str3, int a, int b, int c, int d, special spec_offer[nmax]); //конструктор с параметрами
     book_store(string str1); //конструктор параметром
     void get();
-    void input(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d);
     void output();
     void sell();
     void price_rise();
@@ -144,7 +145,7 @@ book_store::book_store(string str) //конструктор с параметр�
     this->spec_offer[1].set_default();
 }
 
-book_store::book_store(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d, special spec_offer[nmax]) //конструктор с параметрами
+book_store::book_store(string str1, string str2, string str3, int a, int b, int c, int d, special spec_offer[nmax]) //конструктор с параметрами
 {
     this->title = str1;
     this->author = str2;
@@ -158,17 +159,6 @@ book_store::book_store(char str1[nmax], char str2[nmax], char str3[nmax], int a,
         this->spec_offer[i] = spec_offer[i];
     }
     printf("New book initialized (with parameters)\n");
-}
-
-void book_store::input(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d) //ввод
-{
-    title = str1;
-    author = str2;
-    genre = str3;
-    price = a;
-    num_stock = b;
-    popularity = c;
-    n = d;
 }
 
 void book_store::get() //установка значений
@@ -193,7 +183,6 @@ void book_store::output() //вывод
     for (int i = 0; i < n; i++)
     {
         spec_offer[i].output1();
-        //printf("%d ", spec_offer[i]);
     }
     printf("\n");
 }
@@ -273,30 +262,26 @@ void book_store::reduce_bonus() //сокращение числа бонусов
 int main()
 {
     int x, y, z, n, m, k = 1, p; //переменные
-    char s1[nmax], s2[nmax], s3[nmax], s4[nmax]; //массивы
+    string s1, s2, s3; //массивы
 
     //статическая переменная
 
     puts("\nWorking with a single static variable");
-    special spec_offer1[1]; //вызов конструктора по умолчанию (без параметров) статический
-    book_store book1(spec_offer1); //вызов конструктора с одним параметром статический
+    special spec_offer1[1]; //вызов конструктора по умолчанию (без параметров) статический 
     puts("Input information about the 1 book\n");
     printf("Input title: ");
-    rewind(stdin);
-    gets_s(s1, nmax);
+    cin >> s1;
     printf("Input author: ");
-    rewind(stdin);
-    gets_s(s2, nmax);
+    cin >> s2;
     printf("Input genre: ");
-    rewind(stdin);
-    gets_s(s3, nmax);
+    cin >> s3;
     printf("Input price: ");
-    scanf_s("%d", &x);
+    cin >> x;
     printf("Input number in stock: ");
-    scanf_s("%d", &y);
+    cin >> y;
     printf("Input popularity: ");
-    scanf_s("%d", &z);
-    book1.input(s1, s2, s3, x, y, z, 1);
+    cin >> z;
+    book_store book1(s1, s2, s3, x, y, z, 1, spec_offer1); //вызов конструктора с параметрами статический
     printf("\nFirst book\n");
     book1.get();
     book1.output();
@@ -330,25 +315,21 @@ int main()
     //динамическая переменная
 
     puts("\nWorking with a single dynamic variable");
-    special* spec_offer2 = new special(); //вызов конструктора по умолчанию (без параметров) динамический
-    book_store* book2 = new book_store(spec_offer2); //вызов конструктора с одним параметром динамический
+    special* spec_offer2 = new special(); //вызов конструктора по умолчанию (без параметров) динамический 
     puts("\nInput information about the 2 book\n");
     printf("Input title: ");
-    rewind(stdin);
-    gets_s(s1, nmax);
+    cin >> s1;
     printf("Input author: ");
-    rewind(stdin);
-    gets_s(s2, nmax);
+    cin >> s2;
     printf("Input genre: ");
-    rewind(stdin);
-    gets_s(s3, nmax);
+    cin >> s3;
     printf("Input price: ");
-    scanf_s("%d", &x);
+    cin >> x;
     printf("Input number in stock: ");
-    scanf_s("%d", &y);
+    cin >> y;
     printf("Input popularity: ");
-    scanf_s("%d", &z);
-    book2->input(s1, s2, s3, x, y, z, 1);
+    cin >> z;
+    book_store* book2 = new book_store(s1, s2, s3, x, y, z, 1, spec_offer2); //вызов конструктора с параметрами динамический
     printf("\nSecond book\n");
     book2->get();
     book2->output();
@@ -395,25 +376,21 @@ int main()
     for (int i = 0; i < n; i++)
     {
         spec_offer3[i].set_default();
-    }
-    book_store* book3 = new book_store(spec_offer3); //вызов конструктора с одним параметром динамический
+    } 
     puts("\nInput information about 3 book\n");
     printf("Input title: ");
-    rewind(stdin);
-    gets_s(s1, nmax);
+    cin >> s1;
     printf("Input author: ");
-    rewind(stdin);
-    gets_s(s2, nmax);
+    cin >> s2;
     printf("Input genre: ");
-    rewind(stdin);
-    gets_s(s3, nmax);
+    cin >> s3;
     printf("Input price: ");
-    scanf_s("%d", &x);
+    cin >> x;
     printf("Input number in stock: ");
-    scanf_s("%d", &y);
+    cin >> y;
     printf("Input popularity: ");
-    scanf_s("%d", &z);
-    book3->input(s1, s2, s3, x, y, z, n);
+    cin >> z;
+    book_store* book3 = new book_store(s1, s2, s3, x, y, z, n, spec_offer3); //вызов конструктора с параметрами динамический
     printf("\nYour book\n");
     book3->get();
     book3->output();

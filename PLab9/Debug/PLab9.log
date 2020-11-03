@@ -1,4 +1,3 @@
 ﻿  PLab9.cpp
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(275,21): warning C4101: 'm': unreferenced local variable
-C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(276,40): warning C4101: 's4': unreferenced local variable
+C:\Users\Ангелина\source\repos\IIISemester\PLab9\PLab9\PLab9.cpp(277,21): warning C4101: 'm': unreferenced local variable
   PLab9.vcxproj -> C:\Users\Ангелина\source\repos\IIISemester\PLab9\Debug\PLab9.exe
