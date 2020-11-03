@@ -1,5 +1,5 @@
 ﻿// PLab9.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//Статические поля и методы
+//Конструкторы, мелкое/глубокое копирование и перегрузка оператора присваивания
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
@@ -18,7 +18,7 @@ using namespace std;
 class special //бонусы
 {
     int bonus_num; //число бонусов
-    char* definition; //определение бонусов
+    char* definition; //наименование бонусов
 public:
     special() //конструктор без параметров
     {
@@ -28,44 +28,44 @@ public:
     {
         this->bonus_num = a;
     }
-    special(char* b, int c)
+    special(char* b, int c) //конструктор с параметрами
     {
         definition = new char[10];
         strcpy(definition, b);
         bonus_num = c;
     }
-    special(const special& spec_offer) //конструктор копирования
+    special(const special& spec_offer) //конструктор копирования + мелкое копирование
     {
         this->definition = spec_offer.definition;
         this->bonus_num = spec_offer.bonus_num;
     }
-    special& operator = (special& spec_offer)
+    special& operator = (special& spec_offer) //перегрузка оператора присваивания + глубокое копирование
     {
         int k;
         if (definition)
         {
-            delete definition;    // очистка памяти
+            delete definition; // очистка памяти
         }
         definition = NULL;
         this->bonus_num = spec_offer.bonus_num; // копирование обычного поля
         k = strlen(spec_offer.definition) + 1;
-        definition = new char[k];  // выделение памяти для новой копии памяти для определения
+        definition = new char[k];  // выделение памяти для новой копии памяти для наименования
         strcpy(this->definition, spec_offer.definition);  // копирование в новую выделенную область
         return *this;
     }
-    void output()
+    void output() //вывод общий
     {
         printf("\nNumber of bonuses: %d\nDefinition: %s\n", bonus_num, definition);
     }
-    void output1()
+    void output1() //вывод исла бонусов
     {
         printf("%d ", bonus_num);
     }
-    void change_def(char* a)
+    void change_def(char* a) //изменение наименования
     {
         strcpy(this->definition, a);
     }
-    void change_bonus_num(int a)
+    void change_bonus_num(int a) //изменение числа бонусов
     {
         this->bonus_num = a;
     }
@@ -94,9 +94,9 @@ class book_store //основной класс
     int popularity; //популярность в условных единицах
 public:
     int num_stock; //количество в магазине
-    book_store(special spec_offer[nmax]); //конструктор с одним параметром
+    book_store(special spec_offer[nmax]); //конструктор параметром
     book_store(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d, special spec_offer[nmax]); //конструктор с параметрами
-    book_store(string str1); //конструктор с одним параметром
+    book_store(string str1); //конструктор параметром
     void get();
     void input(char str1[nmax], char str2[nmax], char str3[nmax], int a, int b, int c, int d);
     void output();
@@ -132,11 +132,11 @@ book_store::book_store(special spec_offer[nmax]) //конструктор с п�
     printf("\nEmpty book created\n");
 };
 
-book_store::book_store(string str)
+book_store::book_store(string str) //конструктор с параметром для создания массива
 {
     this->title = str;
-    this->author = "unknown";
-    this->genre = "unknown";
+    this->author = str_0;
+    this->genre = str_0;
     this->price = 100;
     this->num_stock = 10;
     this->popularity = 15;
@@ -396,7 +396,7 @@ int main()
     {
         spec_offer3[i].set_default();
     }
-    book_store* book3 = new book_store(spec_offer3);
+    book_store* book3 = new book_store(spec_offer3); //вызов конструктора с одним параметром динамический
     puts("\nInput information about 3 book\n");
     printf("Input title: ");
     rewind(stdin);
@@ -414,7 +414,6 @@ int main()
     printf("Input popularity: ");
     scanf_s("%d", &z);
     book3->input(s1, s2, s3, x, y, z, n);
-    //book_store* book3 = new book_store(s1, s2, s3, x, y, z, n, spec_offer3); //вызов конструктора со всеми параметрами динамический
     printf("\nYour book\n");
     book3->get();
     book3->output();
@@ -464,8 +463,8 @@ int main()
     ptr1 = new char[10];
 
     strcpy(ptr1, "iii");
-    special spec_offer6(ptr1, 10);
-    special spec_offer7 = spec_offer6;
+    special spec_offer6(ptr1, 10); //вызов конструктора с параметрами статический
+    special spec_offer7 = spec_offer6; //вызов конструктора копирования
 
     printf("\nspec_offer6\n");
     spec_offer6.output();
